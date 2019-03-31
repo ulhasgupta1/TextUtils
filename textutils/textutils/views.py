@@ -2,7 +2,7 @@
 
 from django.http import HttpResponse
 from django.shortcuts import render
-
+import re
 
 def index(request):
     return render(request,'index.html')
@@ -38,10 +38,8 @@ def analyze(request):
         return render(request, 'analyze.html', params)
 
     elif(extraspaceremover=="on"):
-        analyzed = ""
-        for index, char in enumerate(djtext):
-            if not(djtext[index] == " " and djtext[index+1]==" "):
-                analyzed = analyzed + char
+
+        analyzed=re.sub(' +',' ', djtext)
 
         params = {'purpose': 'Removed NewLines', 'analyzed_text': analyzed}
         # Analyze the text
